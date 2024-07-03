@@ -2,14 +2,13 @@ import { useState } from "react";
 
 import "./App.css";
 import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl text-blue-500 font-bold">
-        MERN STACK RECIPE APP
-      </h1>
-      <div>
+      <Navbar />
+      <div className="p-5 bg-[#f1f1f1] h-screen">
         <Outlet />
       </div>
     </>
