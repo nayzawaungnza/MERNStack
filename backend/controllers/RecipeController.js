@@ -10,19 +10,15 @@ const RecipeController = {
     }
   },
   store: async (req, res) => {
-    try {
-      const { title, description, ingredients, instructions } = req.body;
-      const recipe = await Recipe.create({
-        title,
-        description,
-        ingredients,
-        instructions,
-      });
+    const { title, description, ingredients, instructions } = req.body;
+    const recipe = await Recipe.create({
+      title,
+      description,
+      ingredients,
+      instructions,
+    });
 
-      res.json(recipe);
-    } catch (error) {
-      res.status(400).json({ msg: error.message });
-    }
+    res.json(recipe);
   },
   update: (req, res) => {
     res.json({ message: "Update Recipe" });
