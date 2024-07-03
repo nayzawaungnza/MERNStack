@@ -25,11 +25,46 @@ const RecipeController = {
       res.status(400).json({ msg: error.message });
     }
   },
-  update: (req, res) => {
-    res.json({ message: "Update Recipe" });
+  update: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ msg: "Invalid ID" });
+      }
+      const recipe = await Recipe.findByIdAndUpdate(
+        id,
+        { ...req.body },
+        {
+          new: true,
+        }
+      );
+      if (!recipe) {
+        return res.status(404).json({ msg: "Recipe not found" });
+      }
+
+      res.json(recipe);
+    } catch (error) {
+      res.status(500).json({ msg: "Internal Server Error" });
+    }
   },
-  destroy: (req, res) => {
-    res.json({ message: "Delete Recipe" });
+  destroy: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ msg: "Invalid ID" });
+      }
+
+      const recipe = await Recipe.findByIdAndDelete(id);
+
+      if (!recipe) {
+        return res.status(404).json({ msg: "Recipe not found" });
+      }
+
+      res.json({ message: "Delete Recipe Success" });
+    } catch (error) {
+      res.status(500).json({ msg: "Internal Server Error" });
+    }
   },
   show: async (req, res) => {
     try {
