@@ -1,8 +1,13 @@
 const Recipe = require("../models/Recipe");
 
 const RecipeController = {
-  index: (req, res) => {
-    res.json({ message: "Get all Recipes" });
+  index: async (req, res) => {
+    try {
+      const recipes = await Recipe.find().sort({ createdAt: -1 });
+      res.json(recipes);
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
   },
   store: async (req, res) => {
     try {
@@ -25,8 +30,14 @@ const RecipeController = {
   destroy: (req, res) => {
     res.json({ message: "Delete Recipe" });
   },
-  show: (req, res) => {
-    res.json({ message: "Get Recipe" });
+  show: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const recipe = await Recipe.findById(id);
+      res.json(recipe);
+    } catch (error) {
+      res.status(404).json({ msg: error.message });
+    }
   },
 };
 
