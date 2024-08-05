@@ -3,8 +3,10 @@ const Recipe = require("../models/Recipe");
 
 const RecipeController = {
   index: async (req, res) => {
+    let limit = 2;
+    let page = req.query.page || 1;
     try {
-      const recipes = await Recipe.find().sort({ createdAt: -1 });
+      const recipes = await Recipe.find().skip((page - 1) * limit).limit(limit).sort({ createdAt: -1 });
       res.json(recipes);
     } catch (error) {
       res.status(400).json({ msg: error.message });
