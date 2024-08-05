@@ -24,6 +24,11 @@ export default function Navbar() {
               Contact
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/recipes/create" className="hover:text-orange-400 ">
+              Create Recipe
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </>
